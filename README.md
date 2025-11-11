@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+CSE412 Dealership Demo
 
-## Getting Started
+A simple Next.js + Tailwind + Supabase web app for a fictional vehicle dealership.
+The app currently includes:
 
-First, run the development server:
+A Landing Page that lists dealerships from the Supabase database.
 
-```bash
+A Dealership Inventory Page that shows vehicles for each dealership when you click “View Inventory”.
+
+🚀 Tech Stack
+
+Next.js 16 (App Router)
+
+Tailwind CSS
+
+Supabase (Postgres)
+
+Node.js v22+
+
+⚙️ Setup Instructions
+1. Clone the Repository
+git clone https://github.com/<username>/<repo-name>.git
+cd cse412-dealership
+
+2. Install Dependencies
+npm install
+
+3. Create .env.local
+
+Create a file named .env.local in the project root and add your Supabase credentials:
+
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+
+You can find these values in your Supabase project under Project Settings → API.
+
+4. Build Tailwind CSS (one-time)
+npm run build:css
+
+
+(or use npm run watch:css to rebuild automatically while developing)
+
+5. Run the Development Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Then open http://localhost:3000
+ in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+📁 Project Directory Overview
+cse412-dealership/
+├─ app/
+│  ├─ dealership/
+│  │  └─ [did]/page.tsx     → Dynamic route showing inventory for a specific dealership
+│  ├─ components/            → Reusable UI components (e.g., dealership cards)
+│  ├─ layout.tsx             → Root layout file (defines HTML structure & global styles)
+│  ├─ page.tsx               → Landing page (lists all dealerships)
+│  ├─ globals.css            → Global CSS imported by layout (compiled Tailwind output)
+│  └─ favicon.ico            → App icon
+│
+├─ lib/
+│  └─ supabaseClient.ts      → Initializes Supabase client (connects to database)
+│
+├─ src/
+│  └─ styles/
+│     └─ tailwind.css        → Tailwind input file (contains @tailwind directives)
+│
+├─ styles/
+│  └─ globals.css            → Tailwind build output (used globally)
+│
+├─ .env.local                → Contains your Supabase URL and anon key (not tracked by Git)
+├─ package.json              → Project scripts and dependencies
+└─ README.md                 → Project instructions (this file)
 
-## Learn More
+🧭 Current Features
 
-To learn more about Next.js, take a look at the following resources:
+Landing page lists all dealerships
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+“View inventory” links open a page showing that dealership’s vehicles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Fully connected to Supabase — no authentication or RLS required
 
-## Deploy on Vercel
+Works locally with just npm run dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+👥 Team Git Workflow
+🔄 Cloning the Repo (first time)
+git clone https://github.com/<username>/<repo-name>.git
+cd cse412-dealership
+npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📥 Pull Latest Changes
+
+Before working on anything new, always pull:
+
+git pull origin main
+
+🌿 Create a Branch for Your Work
+git checkout -b feature/your-branch-name
+
+
+Example:
+
+git checkout -b feature/add-navbar
+
+✏️ Stage and Commit Changes
+git add -A
+git commit -m "feat: added navbar to layout"
+
+☁️ Push Your Branch
+git push origin feature/add-navbar
+
+
+Then open a Pull Request (PR) on GitHub for review.
+
+✅ Merge to Main (once approved)
+
+Once your PR is reviewed or tested, merge it into the main branch on GitHub.
+Then pull again to stay up to date:
+
+git pull origin main
+
+👥 Team
+
+CSE412 Group — Stephaan Dahdal, Ethan MacTough, Alfieri Aprile, and Kevin Nomura
