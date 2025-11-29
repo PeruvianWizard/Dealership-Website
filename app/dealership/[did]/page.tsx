@@ -1,18 +1,8 @@
 // app/dealership/[did]/page.tsx
 import React from 'react';
-import { supabase } from '../../../lib/supabaseClient';
+import { supabase } from '@lib/supabaseClient';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-
-type Vehicle = {
-  vin: string;
-  did: number;
-  make?: string | null;
-  model?: string | null;
-  year?: number | null;
-  mileage?: number | null;
-  price?: number | null;
-};
 
 export default async function DealershipPage({ params }: { params: Promise<{ did: string }> | { did: string } }) {
   // params may be a Promise in Next 16 — await it
@@ -24,7 +14,7 @@ export default async function DealershipPage({ params }: { params: Promise<{ did
   if (!dealership) return notFound();
 
   const { data: vehicles, error } = await supabase
-    .from<Vehicle>('vehicle')
+    .from('vehicle')
     .select('*')
     .eq('did', did)
     .order('vin');

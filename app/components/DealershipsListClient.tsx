@@ -1,12 +1,10 @@
 // app/page.tsx  (Landing Page)
 import React from 'react';
 import Link from 'next/link';
-import { supabase } from '../lib/supabaseClient';
-
-type Dealership = { did: number; name: string; address?: string | null; phone?: number | null };
+import { supabase } from '@lib/supabaseClient';
 
 export default async function LandingPage() {
-  const { data: dealerships, error } = await supabase.from<Dealership>('dealership').select('*').order('did');
+  const { data: dealerships, error } = await supabase.from('dealership').select('*').order('did');
 
   if (error) {
     console.error('Supabase error:', error);
