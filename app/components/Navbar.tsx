@@ -1,16 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
+import styles from './Navbar.module.css'
 
 const Navbar = () => {
     return (
         <div>
-            <nav className='navbar navbar-expand-lg
-                            navbar-light bg-light
-                            bg-opacity-75 text-light'>
-                <div className='container'>
-                    <Link className='text-light font-bold'
-                        href="/dealershipsPage">
+            <nav className={styles.bar}>
+                <div className={styles.container}>
+                    <Link className={styles.title}href="/dealershipsPage">
                         Dealerships List
+                    </Link>
+                    <Link className={styles.title} href="/login">
+                        Login
                     </Link>
                 </div>                    
             </nav>   

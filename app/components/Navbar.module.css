@@ -1,0 +1,16 @@
+.bar {
+    background-color: red;
+    height: 30;
+    display: flex;
+}
+.container {
+    flex-grow: 1;
+    display: flex;
+    background-color: blue;
+    justify-content: space-around;
+    color: white;
+}
+
+.title {
+    font-weight: bold;
+}
