@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    background-color: blue;
+    color: white;
+    justify-content: center;
+}
+
+.txt {
+    display: flex;
+    background-color: green;
+    height: 50;
+}
