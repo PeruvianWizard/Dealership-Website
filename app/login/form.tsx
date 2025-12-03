@@ -6,7 +6,10 @@ export function Form() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmit = (e: React.FormEvent) => {};
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log("Log in!");
+    };
 
     return (
         <form onSubmit={onSubmit} className='space-y-12 w-full sm:w-[400px]'>
@@ -31,7 +34,7 @@ export function Form() {
                   type="password"
                 />
                 <div className='flex justify-center'>
-                    <button className='w-half bg-blue h-10 rounded'>
+                    <button type='submit' className='w-half bg-blue h-10 rounded'>
                         Sign In
                     </button>
                 </div>
