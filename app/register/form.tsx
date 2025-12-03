@@ -26,7 +26,8 @@ export function Form() {
             console.error('Error adding new customer:', error);
             return <div className="p-8 text-red-600">Error registering customer.</div>;
         }
-        console.log("Register!")
+
+        console.log("Customer registered successfully!")
     };
 
     return (
