@@ -25,7 +25,7 @@ export default async function DealershipPage({ params }: { params: Promise<{ did
   }
 
   return (
-    <main className="p-8">
+    <main className="p-8 bg-slate-100">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">{dealership.name}</h1>

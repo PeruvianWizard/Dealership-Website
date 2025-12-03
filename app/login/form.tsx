@@ -16,7 +16,7 @@ export function Form() {
             <div className='grid w-full items-center gap-1.5'>
                 <h1>Email</h1>
                 <input 
-                  className='w-full my-2 rounded py-input px-input'
+                  className='w-full my-2 rounded py-input px-input border-1px-black'
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -26,7 +26,7 @@ export function Form() {
                 />
                 <h1>Password</h1>
                 <input 
-                  className='w-full my-2 rounded py-input'
+                  className='w-full my-2 rounded py-input px-input border-1px-black'
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -34,7 +34,7 @@ export function Form() {
                   type="password"
                 />
                 <div className='flex justify-center'>
-                    <button type='submit' className='w-half bg-blue h-10 rounded'>
+                    <button type='submit' className='w-half bg-blue h-10 rounded text-white'>
                         Sign In
                     </button>
                 </div>

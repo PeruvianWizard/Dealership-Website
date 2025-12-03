@@ -21,6 +21,7 @@
 .w-half{width:50%}
 .gap-4{gap:1rem}
 .gap-6{gap:1.5rem}
+.border-1px-black {border: 1px solid black}
 .rounded{border-radius:.25rem}
 .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}
 .bg-blue{--tw-bg-opacity: 1;background-color: rgb(59 130 246 / var(--tw-bg-opacity))}
@@ -48,6 +49,7 @@
 .text-4xl{font-size:2.25rem;line-height:2.5rem}
 .text-sm{font-size:.875rem;line-height:1.25rem}
 .text-xl{font-size:1.25rem;line-height:1.75rem}
+.text-white{color: white}
 .font-bold{font-weight:700}
 .font-semibold{font-weight:600}
 .text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity))}
