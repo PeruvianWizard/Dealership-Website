@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabaseClient';
 import React, { useState} from 'react';
+import { useRouter } from 'next/navigation';
 
 export function Form() {
     const [email, setEmail] = useState('');
@@ -9,13 +10,24 @@ export function Form() {
     const [name, setName] = useState('');
     const [last, setLast] = useState('');
     const [phone, setPhone] = useState('');
+    const router = useRouter();
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Insert new customer into auth.users in supabase
+        const { data: authUser, error: authError } = await supabase.auth.signUp({email,password})
+
+        if (authError) {
+          console.error("Authentication creation error", authError);
+          return;
+        }
+
+        // Insert new customer into customer
         const { error } = await supabase
             .from("customer")
-            .insert({firstname: name,
+            .insert({userid: authUser.user?.id,
+                     firstname: name,
                      lastname: last,
                      phone: phone,
                      email: email,
@@ -27,7 +39,8 @@ export function Form() {
             return <div className="p-8 text-red-600">Error registering customer.</div>;
         }
 
-        console.log("Customer registered successfully!")
+        console.log("Customer registered successfully!");
+        router.push('/login');
     };
 
     return (
@@ -84,7 +97,7 @@ export function Form() {
                   placeholder='Insert 8 character long password'
                 />
                 <div className='flex justify-center'>
-                    <button type='submit' className='w-half bg-blue h-10 rounded'>
+                    <button type='submit' className='w-half bg-blue h-10 rounded text-white'>
                         Register
                     </button>
                 </div>

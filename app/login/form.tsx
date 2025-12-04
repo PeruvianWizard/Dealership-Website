@@ -2,17 +2,26 @@
 
 import { supabase } from '@/lib/supabaseClient';
 import React, { useState} from 'react';
+import { useRouter } from 'next/navigation';
 
 export function Form() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         //TO-DO: Verify user with database
+        const { error } = await supabase.auth.signInWithPassword({email, password})
 
-        console.log("Log in!");
+        if (error) {
+            console.error('Error signing in:', error);
+            return <div className="p-8 text-red-600">Error signing in customer.</div>;
+        }
+
+        console.log("Customer logged in!");
+        router.push('/dealershipsPage');
     };
 
     return (
@@ -26,7 +35,7 @@ export function Form() {
                   onChange={(e) => setEmail(e.target.value)}
                   id="email"
                   type="email"
-                  placeholder='johndoe@example.com'
+                  placeholder='e.g. johndoe@example.com'
                 />
                 <h1>Password</h1>
                 <input 
