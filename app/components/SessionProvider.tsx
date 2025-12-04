@@ -32,11 +32,12 @@ export default function SessionProvider({ children }: { children: React.ReactNod
 
   const deleteAccount = async (userid : string) => {
     const {data, error } = await supabaseAdmin.auth.admin.deleteUser(userid);
-
+    
     if (error) {
       return false;
     }
     else {
+      logout();
       return true;
     }
   }
