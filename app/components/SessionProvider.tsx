@@ -11,15 +11,27 @@ export default function SessionProvider({ children }: { children: React.ReactNod
   const fetchSession = async () => {
     const currentSession = await supabase.auth.getSession();
     console.log(currentSession);
-    setSession(currentSession.data);
+    setSession(currentSession.data.session);
   }
 
   useEffect(() => {
     fetchSession();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    })
+
+    return () => {
+      listener.subscription.unsubscribe();
+    }
   }, []);
 
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return(
-    <sessionContext.Provider value={session}>
+    <sessionContext.Provider value={{session, logout}}>
         {children}
     </sessionContext.Provider>
   );
