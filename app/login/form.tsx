@@ -1,13 +1,17 @@
 "use client"
 
+import { supabase } from '@/lib/supabaseClient';
 import React, { useState} from 'react';
 
 export function Form() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        //TO-DO: Verify user with database
+
         console.log("Log in!");
     };
 
