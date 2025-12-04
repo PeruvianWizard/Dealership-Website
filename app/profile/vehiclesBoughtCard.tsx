@@ -14,7 +14,7 @@ export default function VehiclesBoughtCard() {
         const vehiclesBought = async () => {
             const { data, count,  error } = await supabase
                 .from("transactions")
-                .select("tid, customer!inner(customerid)", {count: "exact"})
+                .select("*, customer!inner(customerid)", {count: "exact"})
                 .eq("customer.userid", userid)
 
             if (!error) {
