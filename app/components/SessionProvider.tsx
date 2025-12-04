@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState, createContext, useContext } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, supabaseAdmin } from '@/lib/supabaseClient';
 
 const sessionContext = createContext<any>(null);
 
@@ -30,8 +30,19 @@ export default function SessionProvider({ children }: { children: React.ReactNod
     await supabase.auth.signOut();
   };
 
+  const deleteAccount = async (userid : string) => {
+    const {data, error } = await supabaseAdmin.auth.admin.deleteUser(userid);
+
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   return(
-    <sessionContext.Provider value={{session, logout}}>
+    <sessionContext.Provider value={{session, logout, deleteAccount}}>
         {children}
     </sessionContext.Provider>
   );

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import VehiclesBoughtCard from './vehiclesBoughtCard';
 
 export default function Profile() {
-    const { logout } = useSession();
+    const { session, logout, deleteAccount } = useSession();
     const router = useRouter();
 
     return(
@@ -19,9 +19,11 @@ export default function Profile() {
                     <button className='bg-blue h-10 rounded text-white px-8' onClick={() => {logout(); router.push('/login')}}>
                         Logout
                     </button>
+                    <button className='bg-red h-10 rounded text-white px-8' onClick={() => {deleteAccount(session?.user.id); router.push('/login')}}>
+                        Delete Account
+                    </button>
                 </div>
-            </div>
-            
+            </div>  
         </div>
     );
 }
