@@ -12,7 +12,7 @@ export default async function LandingPage() {
   }
 
   return (
-    <main className="p-8">
+    <main className="p-8 bg-slate-100">
       <h1 className="text-4xl font-bold mb-6">Welcome to the Dealership Demo</h1>
       <p className="mb-6 text-gray-600">Browse dealerships and view inventory. This is the Landing Page.</p>
 
