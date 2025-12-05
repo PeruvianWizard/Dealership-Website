@@ -43,13 +43,13 @@ export default function VehiclesBoughtCard() {
                     <p className='pt-6'>Click to see all transactions</p>
                 </div>
             ) : (
-                <div>
+                <div className='space-y-2'>
                     <h2>All Transactions</h2>
                     {txns.length === 0 ? (
                         <p>No transactions found.</p>
                     ) : (
                         txns.map((t) => (
-                            <div key={t.tid} className='border-1px-black py-2 px-2 rounded-xl bg-white'>
+                            <div key={t.tid} className='py-2 px-2 rounded-xl bg-white bg-slate-100'>
                                 <p>Transaction ID: {t.tid}</p>
                                 <p>VIN: {t.vin}</p>
                             </div>
