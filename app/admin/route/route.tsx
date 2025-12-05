@@ -1,28 +1,27 @@
-//app/admin/route.tsx
-import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 
-// Post Request to handle dealership creation
+export async function GET() {
+    const { data } = await supabase.from("dealership").select("*").order("did");
+    return Response.json(data);
+}
+
 export async function POST(req: Request) {
+    const body = await req.json();
+    const { error } = await supabase.from("dealership").insert(body);
+    if (error) return new Response(error.message, { status: 400 });
+    return new Response("OK");
+}
 
-    // Request parameters
-    const { name, address, phone } = await req.json();
+export async function PUT(req: Request) {
+    const { did, ...rest } = await req.json();
+    const { error } = await supabase.from("dealership").update(rest).eq("did", did);
+    if (error) return new Response(error.message, { status: 400 });
+    return new Response("OK");
+}
 
-    // Insertion into Supabase database
-    const { error } = await supabase
-        .from("dealership")
-        .insert({
-            name,
-            address,
-            phone,
-        });
-
-    // Error Handling
-    if (error) {
-        console.error("Insertion Error:", error);
-        return NextResponse.json({ error: error.message, code: error.code, details: error.details }, { status: 400 });
-    }
-
-    // Return success on good insertion
-    return NextResponse.json({ success: true });
+export async function DELETE(req: Request) {
+    const { did } = await req.json();
+    const { error } = await supabase.from("dealership").delete().eq("did", did);
+    if (error) return new Response(error.message, { status: 400 });
+    return new Response("OK");
 }

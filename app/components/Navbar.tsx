@@ -27,6 +27,9 @@ const Navbar = () => {
                             Login
                         </Link>
                     )}
+                    <Link className={styles.title} href="/admin">
+                        Admin Page
+                    </Link>
                     
                 </div>                    
             </nav>   

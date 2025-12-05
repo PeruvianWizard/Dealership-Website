@@ -1,84 +1,267 @@
-﻿//app/admin/page.tsx
-"use client";
+﻿"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function InsertDealership() {
-
-    // Variables and their use states
+export default function AdminPage() {
+    // Create form fields
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [status, setStatus] = useState("");
 
-    // Submission function
+    // List of dealerships
+    const [dealerships, setDealerships] = useState<any[]>([]);
+
+    // Edit modal state
+    const [isEditing, setIsEditing] = useState(false);
+    const [editId, setEditId] = useState<number | null>(null);
+    const [editName, setEditName] = useState("");
+    const [editAddress, setEditAddress] = useState("");
+    const [editPhone, setEditPhone] = useState("");
+
+    // Load dealerships
+    async function fetchDealerships() {
+        try {
+            const res = await fetch("/admin/route", { method: "GET" });
+            if (!res.ok) {
+                console.error("Failed to fetch dealerships:", res.status);
+                setDealerships([]);
+                return;
+            }
+            const data = await res.json();
+            setDealerships(Array.isArray(data) ? data : []);
+        } catch (err) {
+            console.error("Fetch error:", err);
+            setDealerships([]);
+        }
+    }
+
+    useEffect(() => {
+        fetchDealerships();
+    }, []);
+
+    // CREATE dealership
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setStatus("Submitting...");
 
-        const res = await fetch("/admin/route", {
-            method: "POST",
-            body: JSON.stringify({
-                name,
-                address,
-                phone: Number(phone),
-            }),
-        });
+        try {
+            const res = await fetch("/admin/route", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name,
+                    address,
+                    phone: Number(phone),
+                }),
+            });
 
-        if (!res.ok) {
-            setStatus("Failed to create dealership.");
-            return;
+            if (!res.ok) {
+                const txt = await res.text();
+                setStatus(`Failed to create dealership: ${txt || res.status}`);
+                return;
+            }
+
+            setStatus("Dealership created!");
+            setName("");
+            setAddress("");
+            setPhone("");
+            await fetchDealerships();
+        } catch (err) {
+            console.error(err);
+            setStatus("Failed to create dealership (network).");
         }
+    }
 
-        setStatus("Dealership created!");
-        setName("");
-        setAddress("");
-        setPhone("");
+    // OPEN edit modal
+    function openEdit(d: any) {
+        setEditId(d.did);
+        setEditName(d.name ?? "");
+        setEditAddress(d.address ?? "");
+        setEditPhone(String(d.phone ?? ""));
+        setIsEditing(true);
+    }
+
+    // SUBMIT edit
+    async function submitEdit() {
+        if (editId == null) return;
+        setStatus("Updating...");
+
+        try {
+            const res = await fetch("/admin/route", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    did: editId,
+                    name: editName,
+                    address: editAddress,
+                    phone: Number(editPhone),
+                }),
+            });
+
+            if (!res.ok) {
+                const txt = await res.text();
+                setStatus(`Error updating dealership: ${txt || res.status}`);
+                return;
+            }
+
+            setIsEditing(false);
+            setStatus("Updated!");
+            await fetchDealerships();
+        } catch (err) {
+            console.error(err);
+            setStatus("Error updating dealership (network).");
+        }
+    }
+
+    // DELETE dealership
+    async function deleteDealer(did: number) {
+        const ok = confirm("Delete this dealership? This cannot be undone.");
+        if (!ok) return;
+
+        try {
+            const res = await fetch("/admin/route", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ did }),
+            });
+
+            if (!res.ok) {
+                const txt = await res.text();
+                alert(`Failed to delete: ${txt || res.status}`);
+                return;
+            }
+
+            // refresh list
+            await fetchDealerships();
+        } catch (err) {
+            console.error(err);
+            alert("Network error while deleting.");
+        }
     }
 
     return (
         <main className="p-8 max-w-xl mx-auto">
+            {/* CREATE form */}
             <h1 className="text-2xl font-bold mb-4">Create New Dealership</h1>
 
             <form onSubmit={handleSubmit} className="space-y-4 p-4 shadow rounded bg-white">
-
+                {/* Name */}
                 <div>
                     <label className="block mb-1 font-medium">Name: </label>
                     <input
-                        className="input input-bordered w-full"
+                        className="border border-gray-300 rounded p-2 w-full"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        type="text"
                     />
                 </div>
 
+                {/* Address */}
                 <div>
                     <label className="block mb-1 font-medium">Address: </label>
                     <input
-                        className="input input-bordered w-full"
+                        className="border border-gray-300 rounded p-2 w-full"
                         required
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        type="text"
                     />
                 </div>
 
+                {/* Phone */}
                 <div>
                     <label className="block mb-1 font-medium">Phone Number: </label>
                     <input
-                        className="input input-bordered w-full"
+                        className="border border-gray-300 rounded p-2 w-full"
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        type="text"
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Create Dealership</button>
+                <button type="submit" className="btn btn-primary">
+                    Create Dealership
+                </button>
 
-                {status && <p className="text-sm text-gray-700">{status}</p>}
+                {status && <p className="text-sm mt-2 text-gray-700">{status}</p>}
             </form>
+
+            {/* LIST Dealerships */}
+            <h2 className="text-xl font-semibold mt-10 mb-4">Existing Dealerships</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {dealerships.map((d: any) => (
+                    <div key={d.did} className="p-4 shadow rounded bg-white">
+                        <div>
+                            <p className="text-xl font-semibold">{d.name}</p>
+                            <p className="text-sm text-gray-600">{d.address}</p>
+                            <p className="text-sm text-gray-600">Phone: {d.phone}</p>
+                        </div>
+
+                        <div className="flex gap-2 mt-3">
+                            <button
+                                type="button"
+                                onClick={() => openEdit(d)}
+                                className="px-3 py-1"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => deleteDealer(d.did)}
+                                className="px-3 py-1 text-red-600"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* EDIT Modal */}
+            {isEditing && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded shadow max-w-md w-full">
+                        <h3 className="text-xl font-semibold mb-4">Edit Dealership</h3>
+
+                        <div className="space-y-3">
+                            <input
+                                className="border p-2 w-full rounded"
+                                value={editName}
+                                onChange={(e) => setEditName(e.target.value)}
+                            />
+                            <input
+                                className="border p-2 w-full rounded"
+                                value={editAddress}
+                                onChange={(e) => setEditAddress(e.target.value)}
+                            />
+                            <input
+                                className="border p-2 w-full rounded"
+                                value={editPhone}
+                                onChange={(e) => setEditPhone(e.target.value)}
+                            />
+
+                            <div className="flex justify-end gap-2 mt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsEditing(false)}
+                                    className="px-3 py-1 text-red-600 border rounded"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={submitEdit}
+                                    className="px-3 py-1 rounded"
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }
