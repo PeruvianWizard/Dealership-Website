@@ -85,7 +85,6 @@ export default function AdminPage() {
     // SUBMIT edit
     async function submitEdit() {
         if (editId == null) return;
-        setStatus("Updating...");
 
         try {
             const res = await fetch("/admin/route", {
@@ -106,11 +105,9 @@ export default function AdminPage() {
             }
 
             setIsEditing(false);
-            setStatus("Updated!");
             await fetchDealerships();
         } catch (err) {
             console.error(err);
-            setStatus("Error updating dealership (network).");
         }
     }
 
@@ -141,50 +138,52 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="p-8 max-w-xl mx-auto">
+        <main className="p-8 bg-slate-100">
             {/* CREATE form */}
-            <h1 className="text-2xl font-bold mb-4">Create New Dealership</h1>
+            <div className="p-8 max-w-xl mx-auto">
+                <h1 className="text-2xl font-bold mb-4">Create New Dealership</h1>
 
-            <form onSubmit={handleSubmit} className="space-y-4 p-4 shadow rounded bg-white">
-                {/* Name */}
-                <div>
-                    <label className="block mb-1 font-medium">Name: </label>
-                    <input
-                        className="border border-gray-300 rounded p-2 w-full"
-                        required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
+                <form onSubmit={handleSubmit} className="space-y-4 p-4 shadow rounded bg-white">
+                    {/* Name */}
+                    <div>
+                        <label className="block mb-1 font-medium">Name: </label>
+                        <input
+                            className="border border-gray-300 rounded p-2 w-full"
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
 
-                {/* Address */}
-                <div>
-                    <label className="block mb-1 font-medium">Address: </label>
-                    <input
-                        className="border border-gray-300 rounded p-2 w-full"
-                        required
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                </div>
+                    {/* Address */}
+                    <div>
+                        <label className="block mb-1 font-medium">Address: </label>
+                        <input
+                            className="border border-gray-300 rounded p-2 w-full"
+                            required
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
 
-                {/* Phone */}
-                <div>
-                    <label className="block mb-1 font-medium">Phone Number: </label>
-                    <input
-                        className="border border-gray-300 rounded p-2 w-full"
-                        required
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                </div>
+                    {/* Phone */}
+                    <div>
+                        <label className="block mb-1 font-medium">Phone Number: </label>
+                        <input
+                            className="border border-gray-300 rounded p-2 w-full"
+                            required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                    </div>
 
-                <button type="submit" className="btn btn-primary">
-                    Create Dealership
-                </button>
+                    <button type="submit" className="px-2 py-1 border rounded">
+                        Create Dealership
+                    </button>
 
-                {status && <p className="text-sm mt-2 text-gray-700">{status}</p>}
-            </form>
+                    {status && <p className="text-sm mt-2 text-gray-700">{status}</p>}
+                </form>
+            </div>
 
             {/* LIST Dealerships */}
             <h2 className="text-xl font-semibold mt-10 mb-4">Existing Dealerships</h2>
@@ -225,20 +224,23 @@ export default function AdminPage() {
                     <div className="bg-white p-6 rounded shadow max-w-md w-full">
                         <h3 className="text-xl font-semibold mb-4">Edit Dealership</h3>
 
-                        <div className="space-y-3">
+                        <form onSubmit={submitEdit} className="space-y-3">
                             <input
                                 className="border p-2 w-full rounded"
-                                value={editName}
+                                required
+                                value={editName.trim()}
                                 onChange={(e) => setEditName(e.target.value)}
                             />
                             <input
                                 className="border p-2 w-full rounded"
-                                value={editAddress}
+                                required
+                                value={editAddress.trim()}
                                 onChange={(e) => setEditAddress(e.target.value)}
                             />
                             <input
                                 className="border p-2 w-full rounded"
-                                value={editPhone}
+                                required
+                                value={editPhone.trim()}
                                 onChange={(e) => setEditPhone(e.target.value)}
                             />
 
@@ -251,14 +253,13 @@ export default function AdminPage() {
                                     Cancel
                                 </button>
                                 <button
-                                    type="button"
-                                    onClick={submitEdit}
-                                    className="px-3 py-1 rounded"
+                                    type="submit"
+                                    className="px-3 py-1 border rounded"
                                 >
                                     Save
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             )}
