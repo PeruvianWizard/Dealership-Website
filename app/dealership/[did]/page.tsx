@@ -3,6 +3,7 @@ import React from 'react';
 import { supabase } from '@lib/supabaseClient';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import BuyVehicle from './BuyVehicle';
 
 export default async function DealershipPage({ params }: { params: Promise<{ did: string }> | { did: string } }) {
   // params may be a Promise in Next 16 — await it
@@ -43,11 +44,14 @@ export default async function DealershipPage({ params }: { params: Promise<{ did
       {vehicles && vehicles.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {vehicles.map((v) => (
-            <div key={v.vin} className="p-4 shadow rounded bg-white">
-              <h2 className="font-semibold">{v.make} {v.model} ({v.year})</h2>
-              <p className="text-sm">VIN: {v.vin}</p>
-              <p className="text-sm">Mileage: {v.mileage}</p>
-              <p className="text-sm">Price: ${v.price}</p>
+            <div key={v.vin} className='flex-row' aria-disabled={ v.bought ?? true}>
+              <div className="p-4 flex-column shadow rounded bg-white" >
+                <h2 className="font-semibold">{v.make} {v.model} ({v.year})</h2>
+                <p className="text-sm">VIN: {v.vin}</p>
+                <p className="text-sm">Mileage: {v.mileage}</p>
+                <p className="text-sm">Price: ${v.price}</p>
+              </div>
+              <BuyVehicle did={did} vin={v.vin} />
             </div>
           ))}
         </div>
