@@ -8,6 +8,7 @@ export default async function DealershipTransactions({ params }: { params: Promi
   // params may be a Promise in Next 16 — await it
   const resolved = await params;
   const did = Number(resolved.did);
+  var dealershipURL = "/dealership/" + did;
 
   // fetch dealership and vehicles
   const { data: dealership } = await supabase.from('dealership').select('*').eq('did', did).single();
@@ -25,11 +26,14 @@ export default async function DealershipTransactions({ params }: { params: Promi
   }
 
   return (
-    <main className="p-8">
+    <main className="p-8 bg-slate-100">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">{dealership.name}</h1>
           <p className="text-sm text-gray-600">{dealership.address}</p>
+        </div>
+        <div>
+          <Link href={dealershipURL} className="btn btn-ghost btn-sm">Back to Dealership page</Link>
         </div>
         <div>
           <Link href="/" className="btn btn-ghost btn-sm">← Back to Landing</Link>
