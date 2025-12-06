@@ -31,6 +31,7 @@ export default function SearchByTID() {
     return(
         <div className='flex flex-column justify-center pt-3'>
             <h1>Look Up Bought Vehicle </h1>
+            <p>Insert Transaction ID</p>
             <div>
                 { !showVInfo? (
                     <>
@@ -40,8 +41,6 @@ export default function SearchByTID() {
                             onChange={(e) => setTid(+e.target.value)}
                             id="tid"
                             type="id"
-                            placeholder='Insert Transaction ID'
-
                         />
                         <button className='w-half bg-blue h-10 rounded text-white'
                             onClick={() => {
