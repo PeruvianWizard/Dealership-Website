@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useSession } from '@components/SessionProvider';
+import SearchByTID from './SearchByTID';
 
 export default function VehiclesBoughtCard() {
     const [vehiclesNum, setVehiclesNum] = useState(0);
@@ -48,12 +49,19 @@ export default function VehiclesBoughtCard() {
                     {txns.length === 0 ? (
                         <p>No transactions found.</p>
                     ) : (
-                        txns.map((t) => (
-                            <div key={t.tid} className='py-2 px-2 rounded-xl bg-white bg-slate-100'>
-                                <p>Transaction ID: {t.tid}</p>
-                                <p>VIN: {t.vin}</p>
+                        <>
+                            <div className='scroll-y-auto space-y-2 ' style={{ maxHeight:"160px"}}>
+                                {
+                                    txns.map((t) => (
+                                        <div key={t.tid} className='py-2 px-2 rounded-xl bg-white bg-slate-100'>
+                                            <p>Transaction ID: {t.tid}</p>
+                                            <p>VIN: {t.vin}</p>
+                                        </div>
+                                    ))
+                                }
                             </div>
-                        ))
+                            <SearchByTID />
+                        </>
                     )}
                     <p className='text-blue-500 hover:underline pt-6 cursor-pointer' 
                         onClick={(e) => {
