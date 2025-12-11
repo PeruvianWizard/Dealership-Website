@@ -36,6 +36,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 You can find these values in your Supabase project under **Project Settings → API**.  
 
+NOTE: .env.local file already included for public availability
+
 ### 4. Build Tailwind CSS (one-time)  
 npm run build:css  
 *(or use `npm run watch:css` to rebuild automatically while developing)*  
