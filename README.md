@@ -48,35 +48,35 @@ Then open http://localhost:3000 in your browser.
 
 ## 📁 Project Directory Overview
 cse412-dealership/  
-├─ app/
-│  ├─ admin/
+├─ app/  
+│  ├─ admin/  
 │  │  ├─ route/  
-│  │  │  └─ route.tsx
-│  │  └─ page.tsx
-│  ├─ components/ → Reusable UI components (e.g., dealership cards)
-│  │  ├─ Navbar.module.css
-│  │  ├─ Navbar.tsx
-│  │  └─ SessionProvider.tsx
-│  ├─ dealership/  
+│  │  │  └─ route.tsx  
+│  │  └─ page.tsx  
+│  ├─ components/ → Reusable UI components (e.g., dealership cards)  
+│  │  ├─ Navbar.module.css  
+│  │  ├─ Navbar.tsx  
+│  │  └─ SessionProvider.tsx  
+│  ├─ dealership/    
 │  │  ├─ route/  
-│  │  │  └─ route.tsx
+│  │  │  └─ route.tsx  
 │  │  ├─ transactions/  
-│  │  │  └─ page.tsx
-│  │  ├─ BuyVehicle.tsx
-│  │  ├─ DealershipClient.tsx
-│  │  └─ [did]/page.tsx → Dynamic route showing inventory for a specific dealership
+│  │  │  └─ page.tsx  
+│  │  ├─ BuyVehicle.tsx  
+│  │  ├─ DealershipClient.tsx  
+│  │  └─ [did]/page.tsx → Dynamic route showing inventory for a specific dealership  
 │  ├─ dealershipsPage/  
-│  │  └─ page.tsx
+│  │  └─ page.tsx  
 │  ├─ login/  
-│  │  ├─ form.tsx
-│  │  └─ page.tsx
-│  ├─ register/
-│  │  ├─ form.tsx
-│  │  └─ page.tsx
-│  ├─ profile/
-│  │  ├─ SearchByTID.tsx
-│  │  ├─ VehicleBoughtCard.tsx
-│  │  └─ page.tsx
+│  │  ├─ form.tsx  
+│  │  └─ page.tsx  
+│  ├─ register/  
+│  │  ├─ form.tsx  
+│  │  └─ page.tsx  
+│  ├─ profile/  
+│  │  ├─ SearchByTID.tsx  
+│  │  ├─ VehicleBoughtCard.tsx  
+│  │  └─ page.tsx  
 │  ├─ layout.tsx → Root layout file (defines HTML structure & global styles)  
 │  ├─ page.tsx → Landing page (lists all dealerships)  
 │  ├─ globals.css → Global CSS imported by layout (compiled Tailwind output)  
