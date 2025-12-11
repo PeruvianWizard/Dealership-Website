@@ -49,15 +49,11 @@ Then open http://localhost:3000 in your browser.
 ## 📁 Project Directory Overview
 cse412-dealership/  
 ├─ app/  
-│  ├─ admin/  
-│  │  ├─ route/  
-│  │  │  └─ route.tsx  
-│  │  └─ page.tsx  
 │  ├─ components/ → Reusable UI components (e.g., dealership cards)  
 │  │  ├─ Navbar.module.css  
 │  │  ├─ Navbar.tsx  
 │  │  └─ SessionProvider.tsx  
-│  ├─ dealership/    
+│  ├─ dealership/ → Files containing components and pages related to a dealership  
 │  │  ├─ route/  
 │  │  │  └─ route.tsx  
 │  │  ├─ transactions/  
@@ -66,17 +62,21 @@ cse412-dealership/
 │  │  ├─ DealershipClient.tsx  
 │  │  └─ [did]/page.tsx → Dynamic route showing inventory for a specific dealership  
 │  ├─ dealershipsPage/  
-│  │  └─ page.tsx  
+│  │  └─ page.tsx → Page to display all dealerships  
+│  ├─ admin/  
+│  │  ├─ route/  
+│  │  │  └─ route.tsx  
+│  │  └─ page.tsx → Admin page to manage dealerships  
 │  ├─ login/  
 │  │  ├─ form.tsx  
-│  │  └─ page.tsx  
+│  │  └─ page.tsx → Log in page for users  
 │  ├─ register/  
 │  │  ├─ form.tsx  
-│  │  └─ page.tsx  
+│  │  └─ page.tsx → Register page for new users  
 │  ├─ profile/  
 │  │  ├─ SearchByTID.tsx  
 │  │  ├─ VehicleBoughtCard.tsx  
-│  │  └─ page.tsx  
+│  │  └─ page.tsx → Profile page for users to manage their accounts  
 │  ├─ layout.tsx → Root layout file (defines HTML structure & global styles)  
 │  ├─ page.tsx → Landing page (lists all dealerships)  
 │  ├─ globals.css → Global CSS imported by layout (compiled Tailwind output)  
