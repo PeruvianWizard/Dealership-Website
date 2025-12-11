@@ -4,6 +4,10 @@ A simple **Next.js + Tailwind + Supabase** web app for a fictional vehicle deale
 The app currently includes:  
 - A **Landing Page** that lists dealerships from the Supabase database.  
 - A **Dealership Inventory Page** that shows vehicles for each dealership when you click “View Inventory”.
+- A **Sign In Page** that allows users to sign in into the website (this allows users to be able to "buy" a vehicle)
+- A **Register Page** that allows new users to register
+- A **Profile Page** that shows number of vehicle transactions, a "delete account" button, and a "log out" button
+- An **Admin Page** that allows users to manage all the dealerships and cars in the website
 
 ---
 
@@ -44,10 +48,35 @@ Then open http://localhost:3000 in your browser.
 
 ## 📁 Project Directory Overview
 cse412-dealership/  
-├─ app/  
+├─ app/
+│  ├─ admin/
+│  │  ├─ route/  
+│  │  │  └─ route.tsx
+│  │  └─ page.tsx
+│  ├─ components/ → Reusable UI components (e.g., dealership cards)
+│  │  ├─ Navbar.module.css
+│  │  ├─ Navbar.tsx
+│  │  └─ SessionProvider.tsx
 │  ├─ dealership/  
-│  │  └─ [did]/page.tsx → Dynamic route showing inventory for a specific dealership  
-│  ├─ components/ → Reusable UI components (e.g., dealership cards)  
+│  │  ├─ route/  
+│  │  │  └─ route.tsx
+│  │  ├─ transactions/  
+│  │  │  └─ page.tsx
+│  │  ├─ BuyVehicle.tsx
+│  │  ├─ DealershipClient.tsx
+│  │  └─ [did]/page.tsx → Dynamic route showing inventory for a specific dealership
+│  ├─ dealershipsPage/  
+│  │  └─ page.tsx
+│  ├─ login/  
+│  │  ├─ form.tsx
+│  │  └─ page.tsx
+│  ├─ register/
+│  │  ├─ form.tsx
+│  │  └─ page.tsx
+│  ├─ profile/
+│  │  ├─ SearchByTID.tsx
+│  │  ├─ VehicleBoughtCard.tsx
+│  │  └─ page.tsx
 │  ├─ layout.tsx → Root layout file (defines HTML structure & global styles)  
 │  ├─ page.tsx → Landing page (lists all dealerships)  
 │  ├─ globals.css → Global CSS imported by layout (compiled Tailwind output)  
@@ -74,39 +103,6 @@ cse412-dealership/
 - “View inventory” links open a page showing that dealership’s vehicles  
 - Fully connected to Supabase — no authentication or RLS required  
 - Works locally with just `npm run dev`  
-
----
-
-## 👥 Team Git Workflow
-
-### 🔄 Cloning the Repo (first time)
-git clone https://github.com/PeruvianWizard/Dealership-Website.git  
-cd Dealership-Website 
-npm install  
-
-### 📥 Pull Latest Changes
-Before working on anything new, always pull:  
-git pull origin main  
-
-### 🌿 Create a Branch for Your Work
-git checkout -b feature/your-branch-name  
-Example:  
-git checkout -b feature/add-navbar  
-
-### ✏️ Stage and Commit Changes
-git add -A  
-git commit -m "feat: added navbar to layout"  
-
-### ☁️ Push Your Branch
-git push origin feature/add-navbar  
-Then open a Pull Request (PR) on GitHub for review.  
-
-### ✅ Merge to Main (once approved)
-Once your PR is reviewed or tested, merge it into the `main` branch on GitHub.  
-Then pull again to stay up to date:  
-git pull origin main  
-
----
 
 ## 👥 Team
 CSE412 Group — Stephaan Dahdal, Ethan MacTough, Alfieri Aprile, and Kevin Nomura
